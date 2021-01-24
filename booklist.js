@@ -40,12 +40,19 @@ class UI {
                 <td>${book.title}</td>
                 <td>${book.author}</td>
                 <td>${book.isbn}</td>
-                <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>   
+                <td><a href="#" class="btn btn-danger btn-sm delete" id="delete">X</a></td>   
             `
         );
         list.appendChild(row);
     }
+
+    static clearFields(){
+        document.getElementById('title').value = '';
+        document.getElementById('author').value = '';
+        document.getElementById('isbn').value = '';
+    }
 }
+
 
 //Event: event to display the books 
 document.addEventListener('DOMContentLoaded', UI.displayBooks)
@@ -66,4 +73,8 @@ document.getElementById("book-form"). addEventListener('submit', (e)=>{
 
     //add newBook  to list by calling the static method on the UI class which adds all properties of new book as table data in the previosly created tr node which was appended to the table body
     UI.addBookToList(newBook);
+    UI.clearFields()
 })
+
+// Event: deleting a book 
+document.getElementById('delete').addEventListener('click', UI.deleteBook);
