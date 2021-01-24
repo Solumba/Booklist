@@ -40,16 +40,38 @@ class UI {
                 <td>${book.title}</td>
                 <td>${book.author}</td>
                 <td>${book.isbn}</td>
-                <td><a href="#" class="btn btn-danger btn-sm delete" id="delete">X</a></td>   
+                <td><a href="#" class="btn btn-danger btn-sm delete delete">X</a></td>   
             `
         );
         list.appendChild(row);
     }
 
+    //method to delete book item by targeting an element with the delete class and removing its parent
+    static deleteBook(elem){
+        if(elem.classList.contains('delete')){
+            elem.parentElement.parentElement.remove();
+        }
+    }
+
+    //method to clear input fields after adding a book
     static clearFields(){
         document.getElementById('title').value = '';
         document.getElementById('author').value = '';
         document.getElementById('isbn').value = '';
+    }
+
+    //Method to create a div for alert and display it within the container , also have it delete after 3secs
+    static showAlert(message, className){
+        const div = document.createElement('div');
+        div.className = `alert alert-${className}`;
+        const alertMessage = document.createTextNode(message);
+        div.appendChild(alertMessage);
+        const container = document.querySelector('.container');
+        const form = document.getElementById('book-form');
+        container.insertBefore(div, form)
+
+        //make alert vanish after 3secs
+        setTimeout(document.querySelector('.alert').remove(), 3000);
     }
 }
 
@@ -69,12 +91,22 @@ document.getElementById("book-form"). addEventListener('submit', (e)=>{
     const isbn = document.getElementById("isbn").value;
 
     //instantiate a book(which isnt static) and pass in the data gotten from the input fields 
-    let newBook = new Book(title, author, isbn);
+    if(title === '' || author === '' || isbn === ''){
+        UI.showAlert('please add valid data', 'danger')
+    }
+    else{
+        let newBook = new Book(title, author, isbn);
+    }
 
     //add newBook  to list by calling the static method on the UI class which adds all properties of new book as table data in the previosly created tr node which was appended to the table body
     UI.addBookToList(newBook);
     UI.clearFields()
+    UI.showAlert('Book Added Successfully!', 'success');
 })
 
-// Event: deleting a book 
-document.getElementById('delete').addEventListener('click', UI.deleteBook);
+// Event: deleting a book
+//using event propagation  to select an item being clicked within the book-list element 
+document.getElementById('book-list').addEventListener('click', (e)=>{
+    UI.deleteBook(e.target);
+    UI.showAlert("Book Deleted", "danger");
+});
