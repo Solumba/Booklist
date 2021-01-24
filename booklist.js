@@ -49,3 +49,21 @@ class UI {
 
 //Event: event to display the books 
 document.addEventListener('DOMContentLoaded', UI.displayBooks)
+
+//Event: adding books
+
+//getting the form and adding an event and a function  for when you click of add book
+
+document.getElementById("book-form"). addEventListener('submit', (e)=>{
+    e.preventDefault()
+    //getting form values using their ids
+    var title = document.getElementById("title").value;
+    const author = document.getElementById("author").value;
+    const isbn = document.getElementById("isbn").value;
+
+    //instantiate a book(which isnt static) and pass in the data gotten from the input fields 
+    let newBook = new Book(title, author, isbn);
+
+    //add newBook  to list by calling the static method on the UI class which adds all properties of new book as table data in the previosly created tr node which was appended to the table body
+    UI.addBookToList(newBook);
+})
