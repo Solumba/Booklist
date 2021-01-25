@@ -97,7 +97,8 @@ document.getElementById("book-form"). addEventListener('submit', (e)=>{
     else {
         let newBook = new Book(title, author, isbn);
         UI.showAlert('Book Added Successfully!', 'success')
-        //add newBook  to list by calling the static method on the UI class which adds all properties of new book as table data in the previosly created tr node which was appended to the table body
+        /*add newBook  to list by calling the static method on the UI class which adds all properties of 
+        new book as table data in the previosly created tr node which was appended to the table body*/
         UI.addBookToList(newBook);
         UI.clearFields();
     }
