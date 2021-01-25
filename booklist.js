@@ -6,6 +6,35 @@ class Book {
         this.isbn = isbn;
     }
 }
+
+/* here we create an book array and pass it to the
+local storage after searching to see if it contains any books in it
+the else statement uses the parse method when getting the books(if there are any)
+because json would return only strings so parse makes it an object or its original state
+*/ 
+class DB {
+    static getBooks(){
+        let books;
+        //checking if books are already in LS
+        if(localStorage.getItem('books') === null){
+            books = [];
+        } else {
+            books = JSON.parse(localStorage.getItem('books'));
+        }
+        return books
+    }
+
+    addBooks(book){
+        //getting the existing books which is an empty book array
+    
+        const books = DB.getBooks();
+        //push a new book to this arr of books
+        books.push(book);
+        //setting the array of books to the books key
+        //we use json. stringify because LS doesnt accept objects
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+}
 // create a UI class to handle UI tasks
 class UI {
     static displayBooks(){
