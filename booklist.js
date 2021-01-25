@@ -91,8 +91,12 @@ document.getElementById("book-form"). addEventListener('submit', (e)=>{
     const isbn = document.getElementById("isbn").value;
 
     //instantiate a book(which isnt static) and pass in the data gotten from the input fields 
+    
     if(title === '' || author === '' || isbn === ''){
         UI.showAlert('please add valid data', 'danger')
+    }
+    else if (!Number.isInteger(isbn)) {
+        UI.showAlert("please add a valid isbn number", 'danger');
     }
     else {
         let newBook = new Book(title, author, isbn);
