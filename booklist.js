@@ -71,7 +71,7 @@ class UI {
         container.insertBefore(div, form)
 
         //make alert vanish after 3secs
-        setTimeout(document.querySelector('.alert').remove(), 3000);
+        setTimeout(()=> document.querySelector('.alert').remove(), 5000);
     }
 }
 
@@ -94,14 +94,13 @@ document.getElementById("book-form"). addEventListener('submit', (e)=>{
     if(title === '' || author === '' || isbn === ''){
         UI.showAlert('please add valid data', 'danger')
     }
-    else{
+    else {
         let newBook = new Book(title, author, isbn);
+        UI.showAlert('Book Added Successfully!', 'success')
+        //add newBook  to list by calling the static method on the UI class which adds all properties of new book as table data in the previosly created tr node which was appended to the table body
+        UI.addBookToList(newBook);
+        UI.clearFields();
     }
-
-    //add newBook  to list by calling the static method on the UI class which adds all properties of new book as table data in the previosly created tr node which was appended to the table body
-    UI.addBookToList(newBook);
-    UI.clearFields()
-    UI.showAlert('Book Added Successfully!', 'success');
 })
 
 // Event: deleting a book
